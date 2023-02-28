@@ -392,7 +392,9 @@ static void start_backend(void)
                             conf_dest(conf), error);
         }
         sfree(error);
-        MessageBox(NULL, msg, str, MB_ICONERROR | MB_OK);
+        /* MessageBox(NULL, msg, str, MB_ICONERROR | MB_OK); */
+        lp_logging_error(&wgs.logpolicy, "\n\n");
+        lp_logging_error(&wgs.logpolicy, msg);
         sfree(str);
         sfree(msg);
         exit(0);
@@ -1179,7 +1181,9 @@ static void win_seat_connection_fatal(Seat *seat, const char *msg)
 {
     char *title = dupprintf("%s Fatal Error", appname);
     show_mouseptr(true);
-    MessageBox(wgs.term_hwnd, msg, title, MB_ICONERROR | MB_OK);
+    //MessageBox(wgs.term_hwnd, msg, title, MB_ICONERROR | MB_OK);
+    lp_logging_error(&wgs.logpolicy, "\n\n");
+    lp_logging_error(&wgs.logpolicy, msg);
     sfree(title);
 
     if (conf_get_int(conf, CONF_close_on_exit) == FORCE_ON)
@@ -2087,8 +2091,10 @@ static void exit_callback(void *vctx)
              * we should not generate this informational one. */
             if (exitcode != INT_MAX) {
                 show_mouseptr(true);
-                MessageBox(wgs.term_hwnd, "Connection closed by remote host",
-                           appname, MB_OK | MB_ICONINFORMATION);
+                /* MessageBox(wgs.term_hwnd, "Connection closed by remote host",
+                           appname, MB_OK | MB_ICONINFORMATION); */
+                lp_logging_error(&wgs.logpolicy, "\n\n");
+                lp_logging_error(&wgs.logpolicy, "Connection closed by remote host");
             }
         }
     }
@@ -5485,8 +5491,10 @@ void modalfatalbox(const char *fmt, ...)
     va_end(ap);
     show_mouseptr(true);
     title = dupprintf("%s Fatal Error", appname);
-    MessageBox(wgs.term_hwnd, message, title,
-               MB_SYSTEMMODAL | MB_ICONERROR | MB_OK);
+    /*MessageBox(wgs.term_hwnd, message, title,
+               MB_SYSTEMMODAL | MB_ICONERROR | MB_OK);*/
+    lp_logging_error(&wgs.logpolicy, "\n\n");
+    lp_logging_error(&wgs.logpolicy, message);
     sfree(message);
     sfree(title);
     cleanup_exit(1);
@@ -5505,7 +5513,9 @@ void nonfatal(const char *fmt, ...)
     va_end(ap);
     show_mouseptr(true);
     title = dupprintf("%s Error", appname);
-    MessageBox(wgs.term_hwnd, message, title, MB_ICONERROR | MB_OK);
+    /* MessageBox(wgs.term_hwnd, message, title, MB_ICONERROR | MB_OK); */
+    lp_logging_error(&wgs.logpolicy, "\n\n");
+    lp_logging_error(&wgs.logpolicy, message);
     sfree(message);
     sfree(title);
 }

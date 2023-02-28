@@ -9,4 +9,6 @@ set(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
 set(CMAKE_AR          x86_64-w64-mingw32-ar)
 set(CMAKE_RANLIB      x86_64-w64-mingw32-ranlib)
 
+set(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} --static")
+
 add_compile_definitions(__USE_MINGW_ANSI_STDIO)
